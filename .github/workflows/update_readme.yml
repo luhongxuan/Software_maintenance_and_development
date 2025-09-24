@@ -1,0 +1,15 @@
+name: Update Github Activity
+
+on:
+  workflow_dispatch
+
+jobs:
+  update-activity:
+    runs-on: ubantu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Github Activity
+        uses: TheDanniCraft/activity-log@v1
+        with:
+          GITHUB_USERNAME: "luhongxuan"
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
