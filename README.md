@@ -1,4 +1,4 @@
 ## Recent Activity
-<!--START-ACTIVITY-->
+<!--START_SECTION:activity-->
 _No recent activity yet._
-<!--END-ACTIVITY-->
+<!--END_SECTION:activity-->
