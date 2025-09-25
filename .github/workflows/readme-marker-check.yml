@@ -1,0 +1,21 @@
+name: README markers
+
+on:
+  pull_request:
+    paths: [ "README.md" ]   # 只在 PR 改到 README 時觸發
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure markers exist
+        run: |
+          set -e
+          grep "<!--START-ACTIVITY-->" README.md
+          grep "<!--END-ACTIVITY-->" README.md
