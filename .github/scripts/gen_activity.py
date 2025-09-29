@@ -18,7 +18,7 @@ def fetch_prs():
 
 def render(commits, prs):
     items = []
-    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=TIME_WINDOW_HOURS)
+    cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=TIME_WINDOW_HOURS)
 
     for c in commits:
         dt = datetime.datetime.fromisoformat(c["commit"]["author"]["date"].replace("Z","+00:00"))
