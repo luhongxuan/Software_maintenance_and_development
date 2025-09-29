@@ -1,0 +1,56 @@
+name: README Preview (PR checks)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Generate activity block
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          MODE_SCOPE: this_repo
+          TIME_WINDOW_HOURS: "168"   # 最近 7 天
+        run: |
+          python .github/scripts/gen_activity.py > activity.md
+
+      - name: Produce preview README
+        run: |
+          cp README.md README.preview.md
+          python .github/scripts/replace_between.py \
+            README.preview.md \
+            "<!--START-ACTIVITY-->" "<!--END-ACTIVITY-->" \
+            "$(cat activity.md)"
+
+      - name: Create diff text
+        run: |
+          echo '```diff' > diff.txt
+          git --no-pager diff --no-index README.md README.preview.md >> diff.txt || true
+          echo '```' >> diff.txt
+
+      - name: Comment on PR with diff
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "$(cat diff.txt)"
