@@ -1,5 +1,5 @@
 # Software_maintenance_and_development
 ## Recent Activity
-<!--START_SECTION:activity-->
+<!--START-ACTIVITY-->
 _No recent activity yet._
-<!--END_SECTION:activity-->
+<!--END-ACTIVITY-->
