@@ -1,7 +1,7 @@
 import os, requests, datetime
 
 GH_TOKEN = os.getenv("GH_TOKEN")
-GH_REPO = os.getenv("GH_REPO")  # e.g. owner/repo
+GH_REPO = os.getenv("GH_REPO")
 TIME_WINDOW_HOURS = int(os.getenv("TIME_WINDOW_HOURS", "168"))
 
 headers = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
