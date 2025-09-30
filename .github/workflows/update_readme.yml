@@ -3,6 +3,8 @@ name: Update Github Activity
 on:
   workflow_dispatch
 
+permissions:
+  contents: write
 jobs:
   update-activity:
     runs-on: ubuntu-latest
